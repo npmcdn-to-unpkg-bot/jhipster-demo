@@ -1,5 +1,5 @@
 
-<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -36,6 +36,50 @@
             <input type="text" class="form-control" name="book" id="field_book"
                     ng-model="vm.author.book"
                      />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_login">Login</label>
+            <input type="text" class="form-control" name="login" id="field_login"
+                    ng-model="vm.author.login"
+                    required ng-minlength="8" ng-maxlength="25" ng-pattern="/^[a-zA-Z0-9]*$/" />
+            <div ng-show="editForm.login.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.login.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.login.$error.minlength" translate-value-min="8">
+                    This field is required to be at least 8 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.login.$error.maxlength">
+                    This field cannot be longer than 25 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.login.$error.pattern" translate-value-pattern="^[a-zA-Z0-9]*$">
+                    This field should follow pattern "^[a-zA-Z0-9]*$".
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_password">Password</label>
+            <input type="text" class="form-control" name="password" id="field_password"
+                    ng-model="vm.author.password"
+                    required ng-minlength="8" ng-maxlength="25" />
+            <div ng-show="editForm.password.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.password.$error.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.password.$error.minlength" translate-value-min="8">
+                    This field is required to be at least 8 characters.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.password.$error.maxlength">
+                    This field cannot be longer than 25 characters.
+                </p>
+            </div>
         </div>
 
     </div>

@@ -1,5 +1,6 @@
 package project1.web.rest.dto;
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,6 +19,15 @@ public class AuthorDTO implements Serializable {
     private Integer age;
 
     private String book;
+
+    @NotNull
+    @Size(min = 8, max = 25)
+    @Pattern(regexp = "^[a-zA-Z0-9]*$")
+    private String login;
+
+    @NotNull
+    @Size(min = 8, max = 25)
+    private String password;
 
 
     public Long getId() {
@@ -55,6 +65,20 @@ public class AuthorDTO implements Serializable {
     public void setBook(String book) {
         this.book = book;
     }
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -85,6 +109,8 @@ public class AuthorDTO implements Serializable {
             ", lastName='" + lastName + "'" +
             ", age='" + age + "'" +
             ", book='" + book + "'" +
+            ", login='" + login + "'" +
+            ", password='" + password + "'" +
             '}';
     }
 }

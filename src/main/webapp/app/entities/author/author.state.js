@@ -66,6 +66,8 @@
                                 lastName: null,
                                 age: null,
                                 book: null,
+                                login: null,
+                                password: null,
                                 id: null
                             };
                         }

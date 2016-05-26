@@ -53,6 +53,10 @@ public class AuthorResourceIntTest {
     private static final Integer UPDATED_AGE = 2;
     private static final String DEFAULT_BOOK = "AAAAA";
     private static final String UPDATED_BOOK = "BBBBB";
+    private static final String DEFAULT_LOGIN = "AAAAAAAA";
+    private static final String UPDATED_LOGIN = "BBBBBBBB";
+    private static final String DEFAULT_PASSWORD = "AAAAAAAA";
+    private static final String UPDATED_PASSWORD = "BBBBBBBB";
 
     @Inject
     private AuthorRepository authorRepository;
@@ -91,6 +95,8 @@ public class AuthorResourceIntTest {
         author.setLastName(DEFAULT_LAST_NAME);
         author.setAge(DEFAULT_AGE);
         author.setBook(DEFAULT_BOOK);
+        author.setLogin(DEFAULT_LOGIN);
+        author.setPassword(DEFAULT_PASSWORD);
     }
 
     @Test
@@ -114,6 +120,46 @@ public class AuthorResourceIntTest {
         assertThat(testAuthor.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testAuthor.getAge()).isEqualTo(DEFAULT_AGE);
         assertThat(testAuthor.getBook()).isEqualTo(DEFAULT_BOOK);
+        assertThat(testAuthor.getLogin()).isEqualTo(DEFAULT_LOGIN);
+        assertThat(testAuthor.getPassword()).isEqualTo(DEFAULT_PASSWORD);
+    }
+
+    @Test
+    @Transactional
+    public void checkLoginIsRequired() throws Exception {
+        int databaseSizeBeforeTest = authorRepository.findAll().size();
+        // set the field null
+        author.setLogin(null);
+
+        // Create the Author, which fails.
+        AuthorDTO authorDTO = authorMapper.authorToAuthorDTO(author);
+
+        restAuthorMockMvc.perform(post("/api/authors")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(authorDTO)))
+                .andExpect(status().isBadRequest());
+
+        List<Author> authors = authorRepository.findAll();
+        assertThat(authors).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPasswordIsRequired() throws Exception {
+        int databaseSizeBeforeTest = authorRepository.findAll().size();
+        // set the field null
+        author.setPassword(null);
+
+        // Create the Author, which fails.
+        AuthorDTO authorDTO = authorMapper.authorToAuthorDTO(author);
+
+        restAuthorMockMvc.perform(post("/api/authors")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(authorDTO)))
+                .andExpect(status().isBadRequest());
+
+        List<Author> authors = authorRepository.findAll();
+        assertThat(authors).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -130,7 +176,9 @@ public class AuthorResourceIntTest {
                 .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
                 .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
                 .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
-                .andExpect(jsonPath("$.[*].book").value(hasItem(DEFAULT_BOOK.toString())));
+                .andExpect(jsonPath("$.[*].book").value(hasItem(DEFAULT_BOOK.toString())))
+                .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN.toString())))
+                .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD.toString())));
     }
 
     @Test
@@ -147,7 +195,9 @@ public class AuthorResourceIntTest {
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
             .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
-            .andExpect(jsonPath("$.book").value(DEFAULT_BOOK.toString()));
+            .andExpect(jsonPath("$.book").value(DEFAULT_BOOK.toString()))
+            .andExpect(jsonPath("$.login").value(DEFAULT_LOGIN.toString()))
+            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD.toString()));
     }
 
     @Test
@@ -172,6 +222,8 @@ public class AuthorResourceIntTest {
         updatedAuthor.setLastName(UPDATED_LAST_NAME);
         updatedAuthor.setAge(UPDATED_AGE);
         updatedAuthor.setBook(UPDATED_BOOK);
+        updatedAuthor.setLogin(UPDATED_LOGIN);
+        updatedAuthor.setPassword(UPDATED_PASSWORD);
         AuthorDTO authorDTO = authorMapper.authorToAuthorDTO(updatedAuthor);
 
         restAuthorMockMvc.perform(put("/api/authors")
@@ -187,6 +239,8 @@ public class AuthorResourceIntTest {
         assertThat(testAuthor.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testAuthor.getAge()).isEqualTo(UPDATED_AGE);
         assertThat(testAuthor.getBook()).isEqualTo(UPDATED_BOOK);
+        assertThat(testAuthor.getLogin()).isEqualTo(UPDATED_LOGIN);
+        assertThat(testAuthor.getPassword()).isEqualTo(UPDATED_PASSWORD);
     }
 
     @Test

@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -32,6 +33,17 @@ public class Author implements Serializable {
 
     @Column(name = "book")
     private String book;
+
+    @NotNull
+    @Size(min = 8, max = 25)
+    @Pattern(regexp = "^[a-zA-Z0-9]*$")
+    @Column(name = "login", length = 25, nullable = false)
+    private String login;
+
+    @NotNull
+    @Size(min = 8, max = 25)
+    @Column(name = "password", length = 25, nullable = false)
+    private String password;
 
     public Long getId() {
         return id;
@@ -73,6 +85,22 @@ public class Author implements Serializable {
         this.book = book;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -101,6 +129,8 @@ public class Author implements Serializable {
             ", lastName='" + lastName + "'" +
             ", age='" + age + "'" +
             ", book='" + book + "'" +
+            ", login='" + login + "'" +
+            ", password='" + password + "'" +
             '}';
     }
 }
