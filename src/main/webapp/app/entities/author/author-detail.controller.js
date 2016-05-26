@@ -5,9 +5,9 @@
         .module('project1App')
         .controller('AuthorDetailController', AuthorDetailController);
 
-    AuthorDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Author'];
+    AuthorDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Author', 'User'];
 
-    function AuthorDetailController($scope, $rootScope, $stateParams, entity, Author) {
+    function AuthorDetailController($scope, $rootScope, $stateParams, entity, Author, User) {
         var vm = this;
         vm.author = entity;
         

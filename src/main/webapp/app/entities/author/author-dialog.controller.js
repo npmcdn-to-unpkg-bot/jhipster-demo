@@ -5,11 +5,12 @@
         .module('project1App')
         .controller('AuthorDialogController', AuthorDialogController);
 
-    AuthorDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Author'];
+    AuthorDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Author', 'User'];
 
-    function AuthorDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Author) {
+    function AuthorDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Author, User) {
         var vm = this;
         vm.author = entity;
+        vm.users = User.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

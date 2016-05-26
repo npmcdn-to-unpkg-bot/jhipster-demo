@@ -2,6 +2,8 @@ package project1.web.rest.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 
@@ -29,7 +31,11 @@ public class AuthorDTO implements Serializable {
     @Size(min = 8, max = 25)
     private String password;
 
+    private Long userId;
 
+
+    private Long authorToUserId;
+    
     public Long getId() {
         return id;
     }
@@ -79,6 +85,21 @@ public class AuthorDTO implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getAuthorToUserId() {
+        return authorToUserId;
+    }
+
+    public void setAuthorToUserId(Long userId) {
+        this.authorToUserId = userId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -111,6 +132,7 @@ public class AuthorDTO implements Serializable {
             ", book='" + book + "'" +
             ", login='" + login + "'" +
             ", password='" + password + "'" +
+            ", userId='" + userId + "'" +
             '}';
     }
 }

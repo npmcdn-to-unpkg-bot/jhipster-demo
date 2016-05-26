@@ -45,6 +45,13 @@ public class Author implements Serializable {
     @Column(name = "password", length = 25, nullable = false)
     private String password;
 
+    @Column(name = "user_id")
+    private Long userId;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User authorToUser;
+
     public Long getId() {
         return id;
     }
@@ -101,6 +108,22 @@ public class Author implements Serializable {
         this.password = password;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public User getAuthorToUser() {
+        return authorToUser;
+    }
+
+    public void setAuthorToUser(User user) {
+        this.authorToUser = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -131,6 +154,7 @@ public class Author implements Serializable {
             ", book='" + book + "'" +
             ", login='" + login + "'" +
             ", password='" + password + "'" +
+            ", userId='" + userId + "'" +
             '}';
     }
 }

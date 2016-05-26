@@ -58,6 +58,9 @@ public class AuthorResourceIntTest {
     private static final String DEFAULT_PASSWORD = "AAAAAAAA";
     private static final String UPDATED_PASSWORD = "BBBBBBBB";
 
+    private static final Long DEFAULT_USER_ID = 1L;
+    private static final Long UPDATED_USER_ID = 2L;
+
     @Inject
     private AuthorRepository authorRepository;
 
@@ -97,6 +100,7 @@ public class AuthorResourceIntTest {
         author.setBook(DEFAULT_BOOK);
         author.setLogin(DEFAULT_LOGIN);
         author.setPassword(DEFAULT_PASSWORD);
+        author.setUserId(DEFAULT_USER_ID);
     }
 
     @Test
@@ -122,6 +126,7 @@ public class AuthorResourceIntTest {
         assertThat(testAuthor.getBook()).isEqualTo(DEFAULT_BOOK);
         assertThat(testAuthor.getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(testAuthor.getPassword()).isEqualTo(DEFAULT_PASSWORD);
+        assertThat(testAuthor.getUserId()).isEqualTo(DEFAULT_USER_ID);
     }
 
     @Test
@@ -178,7 +183,8 @@ public class AuthorResourceIntTest {
                 .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
                 .andExpect(jsonPath("$.[*].book").value(hasItem(DEFAULT_BOOK.toString())))
                 .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN.toString())))
-                .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD.toString())));
+                .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD.toString())))
+                .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())));
     }
 
     @Test
@@ -197,7 +203,8 @@ public class AuthorResourceIntTest {
             .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
             .andExpect(jsonPath("$.book").value(DEFAULT_BOOK.toString()))
             .andExpect(jsonPath("$.login").value(DEFAULT_LOGIN.toString()))
-            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD.toString()));
+            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD.toString()))
+            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.intValue()));
     }
 
     @Test
@@ -224,6 +231,7 @@ public class AuthorResourceIntTest {
         updatedAuthor.setBook(UPDATED_BOOK);
         updatedAuthor.setLogin(UPDATED_LOGIN);
         updatedAuthor.setPassword(UPDATED_PASSWORD);
+        updatedAuthor.setUserId(UPDATED_USER_ID);
         AuthorDTO authorDTO = authorMapper.authorToAuthorDTO(updatedAuthor);
 
         restAuthorMockMvc.perform(put("/api/authors")
@@ -241,6 +249,7 @@ public class AuthorResourceIntTest {
         assertThat(testAuthor.getBook()).isEqualTo(UPDATED_BOOK);
         assertThat(testAuthor.getLogin()).isEqualTo(UPDATED_LOGIN);
         assertThat(testAuthor.getPassword()).isEqualTo(UPDATED_PASSWORD);
+        assertThat(testAuthor.getUserId()).isEqualTo(UPDATED_USER_ID);
     }
 
     @Test

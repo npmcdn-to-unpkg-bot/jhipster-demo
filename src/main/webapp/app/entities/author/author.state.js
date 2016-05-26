@@ -68,6 +68,7 @@
                                 book: null,
                                 login: null,
                                 password: null,
+                                userId: null,
                                 id: null
                             };
                         }
