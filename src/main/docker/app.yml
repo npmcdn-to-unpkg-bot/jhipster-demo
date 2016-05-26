@@ -1,0 +1,15 @@
+version: '2'
+services:
+    project1-app:
+        image: project1
+        external_links:
+            - project1-mysql:mysql
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/project1?useUnicode=true&characterEncoding=utf8&useSSL=false
+        ports:
+            - 8080:8080
+    project1-mysql:
+        extends:
+            file: mysql.yml
+            service: project1-mysql
